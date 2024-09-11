@@ -1,4 +1,4 @@
-const TaskModel = require("../models/task");
+import  TaskModel from "../models/task.js";
 
 const createTask = async (req, res) => {
   const { title, description, dueDate, priority, assignedMember } = req.body;
@@ -59,4 +59,4 @@ const getAllTasks = async (req, res) => {
   }
 }
 
-module.exports = { createTask, updateTask, getAllTasks, getTask };
+export  { createTask, updateTask, getAllTasks, getTask };

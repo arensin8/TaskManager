@@ -1,23 +1,30 @@
-const TaskModel = require("../models/task");
+import TaskModel from "../models/task.js";
 
 
-const completion =  async (req, res) => {
-    const { startDate, endDate } = req.query;
-  
-    try {
-      const tasks = await TaskModel.find({
-        status: 'completed',
-        updatedAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
-      });
-  
-      res.status(200).json({
-        statusCode: 200,
-        tasks,
-      });
-    } catch (err) {
-      res.status(500).json({statusCode : 500 , error: 'Error generating report' });
+const completion = async (req, res) => {
+  const { startDate, endDate, teamMember } = req.query;
+  try {
+    const query = {
+      status: 'completed',
+      updatedAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
+    };
+    // Add team member filter if its provided in the query
+    if (teamMember) {
+      query.assignedMember = teamMember;
     }
+    const tasks = await TaskModel.find(query);
+    res.status(200).json({
+      statusCode: 200,
+      tasks,
+    });
+  } catch (err) {
+    res.status(500).json({
+      statusCode: 500,
+      error: 'Error generating report',
+    });
   }
+};
+
 
   const completionStats = async (req, res) => {
     try {
@@ -45,4 +52,4 @@ const completion =  async (req, res) => {
     }
   }
 
-  module.exports = {completion , completionStats}
+  export {completion , completionStats}

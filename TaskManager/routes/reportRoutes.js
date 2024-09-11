@@ -1,10 +1,10 @@
-const express = require("express");
-const { completion, completionStats } = require("../controllers/reportController");
+import  express from "express";
+import  { completion, completionStats } from "../controllers/reportController.js";
 const router = express.Router();
 
 
-// define routes
+// define routes for reports
 router.get('/completion' , completion)
 router.get('/completion-stats' , completionStats)
 
-module.exports = router;
+export default router;

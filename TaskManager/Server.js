@@ -1,14 +1,14 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const connectDB = require("./config/db");
-const taskRoutes = require("./routes/taskRoutes");
-const reportRoutes = require('./routes/reportRoutes')
-const PORT = process.env.PORT || 4000;
+import express from "express";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js";
+import taskRoutes from "./routes/taskRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
 
 dotenv.config();
 
 const app = express();
-app.use(express.json()); // For parsing JSON request bodies
+// for parsing JSON body request
+app.use(express.json());
 
 // Connect to the database
 connectDB();
@@ -17,8 +17,4 @@ connectDB();
 app.use("/api/tasks", taskRoutes);
 app.use("/api/reports", reportRoutes);
 
-
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`)
-});
+export default app;
